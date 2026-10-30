@@ -32,7 +32,7 @@ Built with strict **Anti-AI-Slop layout guardrails**, automated study-design cla
 Salin tautan repositori GitHub ini ke dalam percakapan dengan LLM/Agen Anda (seperti **Gemini Task Mode**, **Claude**, atau **Cursor / Codex**):
 
 ```text
-Gunakan skill dari repo ini: https://github.com/<username>/medical-journal-slides
+Gunakan skill dari repo ini: https://github.com/syafrieyunizar/medical-journal-slides
 Saya ingin membuat presentasi PowerPoint dari jurnal medis.
 ```
 
