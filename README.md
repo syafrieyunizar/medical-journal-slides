@@ -46,7 +46,8 @@
 Bagikan tautan repositori ini atau unggah isi folder ke agen AI Anda bersama berkas PDF jurnal:
 
 ```text
-Gunakan skill dari repo ini untuk membuat slide PowerPoint (.pptx) dari PDF jurnal terlampir.
+Gunakan skill dari repo ini: https://github.com/syafrieyunizar/medical-journal-slides
+Saya ingin membuat presentasi PowerPoint dari PDF jurnal terlampir.
 ```
 
 Agen akan menawarkan **5 Pertanyaan Kalibrasi Opsional** (Bahasa slide, Rentang halaman, Forum presentasi, Palet warna: `Clinical Navy` / `Deep Slate` / `Medical Teal` / `Minimalist High-Contrast`, serta Fokus visual) atau langsung mengeksekusi dengan pengaturan otomatis jika Anda memilih melewati pertanyaan.
