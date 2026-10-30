@@ -1,79 +1,91 @@
-# Medical Journal Slides (`medical-journal-slides`)
+# Medical Journal Slides (`medical-journal-slides`) — v3.0.0
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Format: PPTX](https://img.shields.io/badge/Output-Editable_.pptx-2563EB.svg)](#)
-[![Language: EN / ID](https://img.shields.io/badge/Language-English_%7C_Bahasa_Indonesia-15803D.svg)](https://github.com/adhiprib/humanizer-indonesia)
+[![Format: PPTX](https://img.shields.io/badge/Output-Editable_.pptx-0072B2.svg)](#)
+[![Language: EN / ID](https://img.shields.io/badge/Language-English_%7C_Bahasa_Indonesia-009E73.svg)](https://github.com/adhiprib/humanizer-indonesia)
+[![Validation: 2D Collision & Band QA](https://img.shields.io/badge/QA-validate__medical__pptx.py-D55E00.svg)](#)
 
-An open-source AI Agent Skill that transforms peer-reviewed medical journal articles and clinical research PDFs (from *NEJM*, *The Lancet*, *JAMA*, *BMJ*, *JCO*, etc.) into publication-grade, widescreen (16:9), **fully editable PowerPoint (`.pptx`) presentations**.
-
-Built with strict **Anti-AI-Slop layout guardrails**, automated study-design classification, verbatim clinical metric extraction, and natural Indonesian prose humanization via [`adhiprib/humanizer-indonesia`](https://github.com/adhiprib/humanizer-indonesia).
-
----
-
-## Fitur Utama (Key Features)
-
-1. **4 Arketipe Presentasi Medis Otomatis**:
-   - **Archetype A — Clinical Trial Plenary (7–10 Slide)**: Gaya konferensi ASCO/ESMO/AHA untuk uji klinis acak (RCT) fase II/III.
-   - **Archetype B — Hospital Journal Club & Critical Appraisal (8–12 Slide)**: Bedah metodologi PICO, alur CONSORT, validitas internal (CASP), dan aplikabilitas klinis lokal.
-   - **Archetype C — Visual Abstract / Quick Take (1–3 Slide)**: Ringkasan eksekutif bergaya *NEJM Quick Take* / *JAMA Visual Abstract*.
-   - **Archetype D — Systematic Review & Meta-Analysis (6–9 Slide)**: Alur seleksi PRISMA, matriks *Risk of Bias*, *Forest Plot*, uji heterogenitas ($I^2$), dan kepastian bukti GRADE.
-2. **Guardrail Desain Anti-AI-Slop**:
-   - **Kontrak Zona Horizontal (*Strict Horizontal Bands*)**: Mencegah teks bertabrakan atau meluber (*overflow*) dengan pembagian zona ketat (`Title Band`, `Body Band`, `Footer Band`).
-   - **Open Canvas by Default**: Bebas dari tumpukan kotak-kotak kartu AI yang monoton (*box spam*). Kartu lembut (`#EFF6FF`) hanya digunakan maksimal pada 1/3 jumlah slide.
-   - **Visual Medis Otentik**: Melarang ilustrasi AI dekoratif palsu. Grafik kurva Kaplan-Meier, diagram CONSORT, dan *forest plot* dipotong langsung dari PDF asli pada 300 DPI (`pypdfium2`) atau dibangun sebagai grafik/tabel *native* PowerPoint yang dapat diedit.
-3. **Dukungan Bahasa Indonesia Luwes (`humanizer-indonesia`)**:
-   - Jika pengguna meminta slide berbahasa Indonesia, agen otomatis menerapkan kaidah [`adhiprib/humanizer-indonesia`](https://github.com/adhiprib/humanizer-indonesia) untuk memangkas nominalisasi bertumpuk, menghapus kalkir bahasa Inggris, dan membuang konektor klise khas AI.
+> **GitHub Repository Description**: Autonomous AI Agent Skill & Python toolkit (`python-pptx`) for converting medical journal PDFs (RCTs, Meta-Analyses, Narrative Reviews, Guidelines, Case Reports) into clean, anti-AI-slop, editable PowerPoint (`.pptx`) decks in English or humanized Bahasa Indonesia.
+>
+> **Recommended GitHub Topics**: `medical-presentations` `journal-club` `python-pptx` `ai-agent-skills` `clinical-trials` `bahasa-indonesia` `humanizer` `scientific-slides`
 
 ---
 
-## Cara Penggunaan (How It Works)
+## Fitur Utama (Key Capabilities)
 
-### 1. Cukup Berikan Link Repo Ini ke AI Agent / LLM Anda
-Salin tautan repositori GitHub ini ke dalam percakapan dengan LLM/Agen Anda (seperti **Gemini Task Mode**, **Claude**, atau **Cursor / Codex**):
+1. **8 Arketipe Studi Medis Lengkap (`Archetypes A–H`)**:
+   - **Archetype A — Clinical Trial Plenary (8–10 Slide)**: Uji klinis acak (RCT) fase II/III berstandar CONSORT/ASCO/ESMO.
+   - **Archetype B — Hospital Journal Club & Critical Appraisal (8–12 Slide)**: Bedah metodologi PICO, validitas internal (CASP), dan aplikabilitas klinis lokal.
+   - **Archetype C — Visual Abstract / Quick Take (1–3 Slide)**: Ringkasan eksekutif 3 pilar bergaya *NEJM* / *JAMA*.
+   - **Archetype D — Systematic Review & Meta-Analysis (8–10 Slide)**: Alur PRISMA, matriks *Risk of Bias*, *Forest Plot*, heterogenitas (`I²`), dan kepastian bukti GRADE.
+   - **Archetype E — Narrative, Mechanistic, or Mini Review (8–10 Slide)**: Sintesis jalur biologis/molekuler, gambar mekanisme 300 DPI, dan tabel perbandingan uji klinis (berstandar SANRA).
+   - **Archetype F — Observational Cohort / Case-Control (8–10 Slide)**: Studi kohort/registri berstandar STROBE.
+   - **Archetype G — Clinical Practice Guideline (8–10 Slide)**: Algoritma diagnosis dan kelas rekomendasi terapi (AGREE II / GRADE).
+   - **Archetype H — Clinical Case Report (6–8 Slide)**: Kronologi klinis, pemeriksaan penunjang, dan *clinical pearls* (CARE).
+
+2. **Arsitektur Anti-AI-Slop & Aksesibilitas Native**:
+   - **Latar Belakang Native (`slide.background.fill`) & Sinkronisasi Outline View**: Tidak menggunakan persegi panjang penuh yang mudah tergeser saat diedit, serta menyinkronkan `slide.shapes.title` agar judul slide terbaca di *Outline View* dan pembaca layar (*screen reader*).
+   - **Kontrak Zona Horizontal & Anggaran Kata Terpisah**: Memisahkan kuota kata antara `Title Band` (≤ 22 kata), `Body Band` (≤ 65 kata untuk slide teks; ≤ 115 kata untuk slide tabel klinis), dan `Footer Band` (dikecualikan dari batas kata isi).
+   - **Palet Ramah Buta Warna (Okabe-Ito) + Simbol Semantik**: Menggunakan kontras biru (`#0072B2`), hijau kebiruan (`#009E73`), dan vermilion (`#D55E00`) yang selalu didampingi penanda simbol eksplisit (`[✓]`, `[↑]`, `[↓]`, `[⚠]`).
+   - **Pemotong Gambar PDF 300 DPI Bawaan**: Fungsi `crop_pdf_figure_300dpi()` di dalam `scripts/pptx_medical_builder.py` mengekstrak kurva atau diagram mekanisme langsung dari PDF asli.
+
+3. **Validator Geometri & Deteksi Tumpang Tindih Nyata (`validate_medical_pptx.py`)**:
+   - Mengecek kepatuhan koordinat vertikal tiap zona (`Title`, `Body`, `Footer`).
+   - Melakukan **deteksi tabrakan kotak pembatas 2D berpasangan (*pairwise 2D bounding-box collision detection*)** antar-elemen.
+   - Menghitung kata di dalam *text frame* maupun sel tabel secara terpisah dari judul/footer.
+   - Memverifikasi aturan *bookend* (Cover & Outro bebas bullet/tabel/kartu) serta kuota kartu (≤ 40% slide interior untuk dek > 3 slide; dikecualikan untuk *Visual Abstract* 1–3 slide).
+
+4. **Humanisasi Bahasa Indonesia Medis (`humanizer-indonesia`)**:
+   - Mengintegrasikan panduan mandiri di [`references/id-medical-humanizer.md`](./references/id-medical-humanizer.md) yang diadaptasi dari [`adhiprib/humanizer-indonesia`](https://github.com/adhiprib/humanizer-indonesia), lengkap dengan lokalisasi nomor halaman (`Hal. X`) dan bebas karakter LaTeX mentah.
+
+---
+
+## Cara Penggunaan (How to Use)
+
+### 1. Lewat AI Agent / LLM (Claude Code, Gemini, Cursor, ChatGPT)
+Bagikan tautan repositori ini atau unggah isi folder ke agen AI Anda bersama berkas PDF jurnal:
 
 ```text
-Gunakan skill dari repo ini: https://github.com/<username>/medical-journal-slides
-Saya ingin membuat presentasi PowerPoint dari jurnal medis.
+Gunakan skill dari repo ini untuk membuat slide PowerPoint (.pptx) dari PDF jurnal terlampir.
 ```
 
-### 2. Alur Interaksi Otomatis
-Begitu membaca repositori ini (`SKILL.md` dan `AGENTS.md`), agen AI akan:
-1. Meminta Anda mengunggah berkas **PDF jurnal medis** yang ingin dijadikan slide.
-2. Menyajikan **5 pertanyaan kalibrasi opsional** (Bahasa slide, target jumlah halaman, forum presentasi, tema warna, dan fokus grafik). Anda bebas menjawabnya atau langsung melewati untuk memakai pengaturan otomatis.
-3. Mengekstrak metrik klinis verbatim (PICO, $N$, HR, 95% CI, *p-value*, NNT, dan toksisitas Grade $\ge 3$).
-4. Menghasilkan berkas **`.pptx` yang sepenuhnya dapat diedit** lengkap dengan validasi tata letak.
+Agen akan menawarkan **5 Pertanyaan Kalibrasi Opsional** (Bahasa slide, Rentang halaman, Forum presentasi, Palet warna: `Clinical Navy` / `Deep Slate` / `Medical Teal` / `Minimalist High-Contrast`, serta Fokus visual) atau langsung mengeksekusi dengan pengaturan otomatis jika Anda memilih melewati pertanyaan.
 
-> **Catatan Kompatibilitas LLM**: Jika Anda menggunakan antarmuka LLM yang tidak mendukung eksekusi kode Python untuk membuat file `.pptx` biner, agen akan menyusun kerangka konten slide secara lengkap lalu mengarahkan Anda ke **Gemini (Task Mode)** agar berkas `.pptx` dapat langsung dibuat dan diunduh.
+### 2. Eksekusi Lokal & Pengujian Otomatis (Unit Test)
+Anda juga dapat menjalankan pembangun slide dan rangkaian pengujian secara lokal di mesin apa pun:
+
+```bash
+pip install python-pptx Pillow pypdfium2
+python3 tests/test_medical_slides.py
+```
 
 ---
 
-## Struktur Repositori (Repository Structure)
+## Struktur Repositori
 
 ```text
 medical-journal-slides/
-├── README.md                          # Dokumentasi utama & panduan penggunaan
-├── SKILL.md                           # Spesifikasi utama Agent Skill (v2.1.0)
-├── AGENTS.md                          # Instruksi langsung untuk AI Agent (Gemini, Claude, Codex)
+├── README.md                          # Dokumentasi utama, metadata repo, & panduan penggunaan
+├── SKILL.md                           # Spesifikasi lengkap Agent Skill (v3.0.0)
+├── AGENTS.md                          # Instruksi langsung untuk AI Agent (lintas platform)
 ├── LICENSE                            # Lisensi MIT
-├── .gitignore                         # Konfigurasi gitignore standar
+├── .gitignore                         # Konfigurasi pengecualian berkas sementara
 ├── references/
-│   ├── archetypes-guide.md            # Detail struktur slide per arketipe studi medis
-│   └── id-medical-humanizer.md        # Panduan humanisasi bahasa Indonesia medis (humanizer-indonesia)
-└── scripts/
-    ├── pptx_medical_builder.py        # Modul helper python-pptx dengan kontrak zona anti-AI-slop
-    └── validate_medical_pptx.py       # Skrip audit geometri, batas kata, dan deteksi tumpang tindih
+│   ├── archetypes-guide.md            # Cetak biru lengkap 8 Arketipe Studi Medis (A–H)
+│   └── id-medical-humanizer.md        # Panduan mandiri humanisasi Bahasa Indonesia medis
+├── scripts/
+│   ├── pptx_medical_builder.py        # Library lengkap: native background, tabel, chart, crop 300 DPI
+│   └── validate_medical_pptx.py       # Validator 2D overlap, band, kuota kartu, & anggaran kata terpisah
+├── tests/
+│   └── test_medical_slides.py         # Suite pengujian otomatis pembangun & validator PPTX
+└── examples/
+    └── psychobiotics_gut_brain_axis_id.pptx  # Contoh nyata output PPTX (Sisubalan et al., 2026)
 ```
 
 ---
 
-## Kredit & Referensi Terbuka
+## Kredit & Lisensi
 
-- **[adhiprib/humanizer-indonesia](https://github.com/adhiprib/humanizer-indonesia)** — Kaidah penyuntingan teks Bahasa Indonesia agar luwes dan bebas pola terjemahan AI.
-- **[Chen-Po/research-slides-skill](https://github.com/Chen-Po/research-slides-skill)** — Disiplin verifikasi angka dan struktur slide *journal club*.
-- **[HKUDS/Paper2Slides](https://github.com/HKUDS/Paper2Slides)** & **[M1n-n9/academic-ppt-master](https://github.com/M1n-n9/academic-ppt-master)** — Referensi ekstraksi dokumen ilmiah ke slide presentasi.
-
----
-
-## Lisensi
-
-Dirilis di bawah [MIT License](LICENSE).
+- Diadaptasi untuk kaidah Bahasa Indonesia dari **[adhiprib/humanizer-indonesia](https://github.com/adhiprib/humanizer-indonesia)** (MIT License).
+- Referensi arsitektur slide akademik: **[Chen-Po/research-slides-skill](https://github.com/Chen-Po/research-slides-skill)**, **[HKUDS/Paper2Slides](https://github.com/HKUDS/Paper2Slides)**, dan **[k-dense-ai/claude-scientific-writer](https://github.com/k-dense-ai/claude-scientific-writer)**.
+- Dirilis di bawah [MIT License](LICENSE).
